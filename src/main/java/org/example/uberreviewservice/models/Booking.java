@@ -14,7 +14,7 @@ import java.util.Date;
 @AllArgsConstructor
 public class Booking extends  BaseModel{
 
-    @OneToOne(cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
+    @OneToOne(cascade = {CascadeType.PERSIST,CascadeType.REMOVE},fetch = FetchType.LAZY)
     private Review review; /// we have defFine here one to one relationship
 
 
@@ -29,10 +29,10 @@ public class Booking extends  BaseModel{
 
     private Long totalDistance;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Driver driver;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Passenger passenger;
 
 

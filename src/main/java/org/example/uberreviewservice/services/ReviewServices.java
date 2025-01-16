@@ -1,18 +1,15 @@
 package org.example.uberreviewservice.services;
 
+import jakarta.transaction.Transactional;
 import org.example.uberreviewservice.models.Booking;
-import org.example.uberreviewservice.models.CustomDriver;
 import org.example.uberreviewservice.models.Driver;
-import org.example.uberreviewservice.models.Review;
 import org.example.uberreviewservice.repositories.BookingRepositories;
 import org.example.uberreviewservice.repositories.DriverRepository;
 import org.example.uberreviewservice.repositories.ReviewRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class ReviewServices implements CommandLineRunner {
@@ -28,6 +25,7 @@ public class ReviewServices implements CommandLineRunner {
     }
 
     @Override
+    @Transactional
     public void run(String... args) throws Exception{
         System.out.println("*****************");
 
@@ -77,13 +75,26 @@ public class ReviewServices implements CommandLineRunner {
 //         Optional<Booking> b=bookingRepositories.findById(1L);
 
 
+//
+//        Optional<CustomDriver> d = driverRepository.hqlfindByIdAndName(1L, "ABCD");
+//        if (d.isPresent()) {
+//            System.out.println(d.get().getName());
+//        } else {
+//            System.out.println("Driver not found");
+//        }
 
-        Optional<CustomDriver> d = driverRepository.hqlfindByIdAndName(1L, "ABCD");
-        if (d.isPresent()) {
-            System.out.println(d.get().getName());
-        } else {
-            System.out.println("Driver not found");
+        List<Long> driverIds=new ArrayList<>(Arrays.asList(1L,2L,4L));
+        List<Driver> drivers=driverRepository.findAllByIdIn(driverIds);
+
+        //List<Booking> bookings=bookingRepositories.findAllByDriverIn(drivers);
+        for(Driver driver:drivers){
+            List<Booking> bookings=driver.getBookings();
+            bookings.forEach(booking -> System.out.println(booking.getId()) );
         }
+
+//
+
+
 
 
 
