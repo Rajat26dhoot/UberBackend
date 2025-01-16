@@ -1,6 +1,7 @@
 package org.example.uberreviewservice.services;
 
 import org.example.uberreviewservice.models.Booking;
+import org.example.uberreviewservice.models.CustomDriver;
 import org.example.uberreviewservice.models.Driver;
 import org.example.uberreviewservice.models.Review;
 import org.example.uberreviewservice.repositories.BookingRepositories;
@@ -77,7 +78,7 @@ public class ReviewServices implements CommandLineRunner {
 
 
 
-        Optional<Driver> d = driverRepository.hqlfindByIdAndName(1L, "ABCD");
+        Optional<CustomDriver> d = driverRepository.hqlfindByIdAndName(1L, "ABCD");
         if (d.isPresent()) {
             System.out.println(d.get().getName());
         } else {
