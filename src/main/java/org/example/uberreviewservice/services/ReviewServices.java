@@ -33,8 +33,8 @@ public class ReviewServices implements CommandLineRunner {
 //                .content("Amazing ride quality")
 //                .rating(5.0)
 //                .build();
-////                .createdA(new Date())
-////                .updatedA(new Date())
+//                .createdA(new Date())
+//                .updatedA(new Date())
 //
 //
 //        Booking b= Booking
@@ -66,7 +66,7 @@ public class ReviewServices implements CommandLineRunner {
 //         if(drivers.isPresent()){
 //             System.out.println(drivers.get().getName());
 //             List<Booking> b=drivers.get().getBookings();
-////             List<Booking> bookings=bookingRepositories.findAllByDriverId(1L);
+//             List<Booking> bookings=bookingRepositories.findAllByDriverId(1L);
 //             for(Booking booking:b){
 //                 System.out.print(booking.getId());
 //             }

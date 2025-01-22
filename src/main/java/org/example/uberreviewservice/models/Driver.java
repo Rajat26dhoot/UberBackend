@@ -23,6 +23,10 @@ public class Driver extends BaseModel{
     @Column(nullable = false,unique = true)
     private String licenseNumber;
 
+    private String phoneNumber;
+
+    private String address;
+
     // one to many assosation
     @OneToMany(mappedBy = "driver", fetch = FetchType.LAZY)
     @Fetch(FetchMode.SUBSELECT)
