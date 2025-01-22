@@ -25,7 +25,7 @@ public class Driver extends BaseModel{
 
     private String phoneNumber;
 
-    private String address;
+   
 
     // one to many assosation
     @OneToMany(mappedBy = "driver", fetch = FetchType.LAZY)

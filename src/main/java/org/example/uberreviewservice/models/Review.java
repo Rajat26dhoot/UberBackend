@@ -27,6 +27,8 @@ public class Review extends BaseModel {
 
     private Double rating;
 
+
+
 //    @OneToOne(orphanRemoval = true)
 //
 //    private Booking booking;
