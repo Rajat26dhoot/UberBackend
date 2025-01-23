@@ -14,8 +14,7 @@ import java.util.Date;
 @AllArgsConstructor
 public class Booking extends  BaseModel{
 
-    @OneToOne(cascade = {CascadeType.PERSIST,CascadeType.REMOVE},fetch = FetchType.LAZY)
-    private Review review; /// we have defFine here one to one relationship
+
 
 
     @Enumerated(value = EnumType.STRING)

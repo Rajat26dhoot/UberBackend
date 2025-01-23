@@ -1,8 +1,11 @@
 package org.example.uberreviewservice.services;
 
+import jakarta.transaction.Transactional;
 import org.example.uberreviewservice.models.Review;
 import org.example.uberreviewservice.repositories.ReviewRepository;
 import org.springframework.stereotype.Service;
+import jakarta.persistence.EntityNotFoundException;
+import org.hibernate.FetchNotFoundException;
 
 import java.util.List;
 import java.util.Optional;
@@ -16,9 +19,23 @@ public class ReviewServiceImpl implements ReviewService {
         this.reviewRepository = reviewRepository;
     }
 
+
     @Override
-    public Optional<Review> findReviewById(Long id) {
-        return reviewRepository.findById(id) ;
+    public Optional<Review> findReviewById(Long id) throws EntityNotFoundException {
+        Optional<Review> review;
+        try {
+            review = this.reviewRepository.findById(id);
+            if (review.isEmpty()) {
+                throw new EntityNotFoundException("Review with id " + id + " not found");
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            if(e.getClass() == EntityNotFoundException.class){
+                throw new FetchNotFoundException("Review with id " + id + " not found", id);
+            }
+            throw new FetchNotFoundException("Unable to fetch, PLease try again later!", id);
+        }
+        return review;
     }
 
     @Override
@@ -29,10 +46,29 @@ public class ReviewServiceImpl implements ReviewService {
     @Override
     public boolean deleteReviewById(Long id) {
          try{
-             reviewRepository.deleteById(id);
+             Review review = this.reviewRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+             this.reviewRepository.delete(review);
              return true;
          }catch(Exception e) {
              return false;
          }
     }
+
+    @Override
+    @Transactional
+    public Review publishReview(Review review) {
+        return this.reviewRepository.save(review);
+    }
+    @Override
+    public Review updateReview(Long id, Review newReviewData) {
+        Review review = this.reviewRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+        if(newReviewData.getRating() != null){
+            review.setRating(newReviewData.getRating());
+        }
+        if(newReviewData.getContent() != null){
+            review.setContent(newReviewData.getContent());
+        }
+        return this.reviewRepository.save(review);
+    }
+
 }
